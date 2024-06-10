@@ -1,0 +1,59 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+</head>
+<body>
+    <header>
+        <!-- Aquí va tu menú de navegación -->
+        <div class="contacto">
+            <div>
+                <a href="#">Contacto</a>
+            </div>
+            <div>
+                <a href="#">Seguimiento</a>
+            </div>
+            <div>
+                <a href="#">Tiendas</a>
+            </div>
+        </div>
+        <nav class="flex justify-between">
+            <div>
+                <a href="#">FERREMAS</a>
+            </div>
+
+            <div>
+                <a href="#">Productos</a>
+            </div>
+            <div class="auth">
+                <i class="fas fa-solid fa-user" style="padding-top: 2%"></i>
+                <a href="#">Inicia sesión</a>
+                <p> o </p>
+                <a href="#">Regístrate</a>
+            </div>
+            <div>
+                <a href="#"><i class="fas fa-shopping-cart"></i></a>
+            </div>
+        </nav>
+    </header>
+
+    {% block content %}
+    <!-- El contenido específico de la página irá aquí -->
+    {% endblock %}
+
+    <footer class="footer">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, adipisci fuga iusto maxime molestias possimus quod voluptas. A ducimus, ipsa laudantium odio omnis repudiandae tempora voluptates? Ab blanditiis fugiat quia.</p>
+        <hr>
+        <div class="footer-content">
+            <p>Todos los derechos reservados © 2024</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,54 @@
+
+.contacto {
+    display: flex;
+    justify-content: flex-end;
+    gap: 3%;
+    padding-right: 1%;
+    background: black;
+    color: white;
+    text-align: center;
+}
+
+.contacto a:hover {
+    color: white;
+    text-decoration-line: underline;
+}
+
+.footer {
+    color: white;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: #006989;
+}
+
+.footer-content {
+    color: white;
+    justify-content: center;
+    text-align: center;
+    display: flex;
+    padding: 1%;
+}
+
+nav {
+    background: #006989;
+    padding: 1%;
+    margin-bottom: 0;
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    padding: 0 15px;
+}
+
+nav a:hover {
+    color: white;
+    text-decoration-line: underline;
+}
+
+.auth {
+    justify-content: center;
+    display: flex;
+    color: white;
+}
