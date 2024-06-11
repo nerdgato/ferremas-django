@@ -26,3 +26,4 @@ class Usuario(models.Model):
     codigo_postal = models.CharField(max_length=10)
     telefono = models.CharField(max_length=10)
     fecha_registro = models.DateTimeField(auto_now_add=True)
+    staff = models.BooleanField(default=False)

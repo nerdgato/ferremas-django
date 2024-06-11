@@ -1,0 +1,27 @@
+{% extends 'ferremas/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<link href="{% static 'css/productos.css' %}" rel="stylesheet">
+<div class="flex flex-wrap">
+    {% for producto in productos %}
+    <div class="max-w-xs rounded overflow-hidden shadow-lg m-2">
+        <img class="w-full h-48 object-contain" src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}">
+        <div class="px-6 py-4">
+            <hr>
+            <div class="font-bold text-xl mb-2">{{ producto.nombre }}</div>
+            <p class="text-gray-700 text-base precio">
+                ${{ producto.precio }} CLP
+            </p>
+            <p class="iva">IVA incluido</p>
+        </div>
+        <div class="px-6 pt-4 pb-2">
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Agregar al carrito
+            </button>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -16,8 +16,9 @@
     justify-content: center;
     align-items: center;
     display: flex;
-
 }
+
+
 
 .carousel-control {
     background-color: rgba(0, 0, 0, 0.5);

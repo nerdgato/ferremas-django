@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{{ title }}</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
@@ -26,11 +26,11 @@
         </div>
         <nav class="flex justify-between">
             <div>
-                <a href="#">FERREMAS</a>
+                <a href="{% url 'home' %}">FERREMAS</a>
             </div>
 
             <div>
-                <a href="#">Productos</a>
+                <a href="{% url 'productos' %}">Productos</a>
             </div>
             <div class="auth">
                 <i class="fas fa-solid fa-user" style="padding-top: 2%"></i>
