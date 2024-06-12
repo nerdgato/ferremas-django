@@ -20,15 +20,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const boton = document.querySelector('button');
 
     boton.addEventListener('click', (event) => {
-        event.preventDefault(); // Evitar el envío del formulario al hacer clic
+        event.preventDefault();
 
-        // Crear un objeto con los datos del formulario
         const data = {
             email: form.elements['email'].value,
             password: form.elements['password'].value
         };
 
-        // Hacer una solicitud POST al servidor
         fetch('/api/login/', {
             method: 'POST',
             headers: {
@@ -47,9 +45,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     }
                 });
             } else {
-                swal("¡Buen trabajo!", "Has iniciado sesión exitosamente", "success")
-                .then(() => {
-                    window.location.href = '/';
+                return response.json().then(data => {
+                    swal("¡Buen trabajo!", "Has iniciado sesión exitosamente", "success")
+                    .then(() => {
+                        sessionStorage.setItem('loggedIn', true);
+                        sessionStorage.setItem('staff', data.staff);
+                        window.location.href = '/';
+                    });
                 });
             }
         })

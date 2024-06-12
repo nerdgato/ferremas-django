@@ -4,16 +4,17 @@
 
 {% block content %}
     <link href="{% static 'css/carousel.css' %}" rel="stylesheet">
+    <link href="{% static 'css/home.css' %}" rel="stylesheet">
     <div class="carousel mt-8">
         <div class="carousel-inner">
             <div class="carousel-item">
                 <img src="{% static 'img/banner1.jpg' %}" alt="Imagen 1">
             </div>
             <div class="carousel-item">
-                <img src="https://via.placeholder.com/800x300" alt="Imagen 2">
+                <img src="{% static 'img/banner2.jpg' %}" alt="Imagen 2">
             </div>
             <div class="carousel-item">
-                <img src="https://via.placeholder.com/800x300" alt="Imagen 3">
+                <img src="{% static 'img/banner3.jpg' %}" alt="Imagen 3">
             </div>
         </div>
         <button class="carousel-control prev" onclick="prevSlide()">❮</button>

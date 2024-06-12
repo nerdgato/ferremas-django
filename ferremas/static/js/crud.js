@@ -228,3 +228,31 @@ function eliminarProducto() {
         });
     });
 }
+
+
+window.addEventListener('DOMContentLoaded', (event) => {
+    const loggedIn = sessionStorage.getItem('loggedIn');
+    const isStaff = sessionStorage.getItem('staff');
+
+    if ( loggedIn === 'false' && isStaff === 'false') {
+        swal({
+            title: "Acceso denegado",
+            text: "No tienes permiso para acceder a esta página.",
+            icon: "warning",
+            button: "OK",
+        })
+        .then(() => {
+            window.location.href = '/';
+        });
+    } else if (loggedIn === 'true' && isStaff === 'false'){
+        swal({
+            title: "Acceso denegado",
+            text: "No tienes permiso para acceder a esta página.",
+            icon: "warning",
+            button: "OK",
+        })
+        .then(() => {
+            window.location.href = '/';
+        });
+    }
+});

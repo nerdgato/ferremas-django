@@ -1,11 +1,13 @@
 from rest_framework import serializers
 from .models import Producto, Usuario
 
+
 class ProductoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Producto
         fields = ['id', 'nombre', 'descripcion', 'categoria', 'precio', 'stock', 'imagen']
         extra_kwargs = {'imagen': {'required': False}}
+
 
 class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:

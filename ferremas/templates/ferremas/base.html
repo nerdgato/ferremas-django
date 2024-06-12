@@ -55,5 +55,30 @@
             <p>Todos los derechos reservados © 2024</p>
         </div>
     </footer>
+    <script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+    const authDiv = document.querySelector('.auth');
+    const navDiv = document.querySelector('.menu');
+    if (sessionStorage.getItem('loggedIn') === 'true') {
+        authDiv.innerHTML = `
+            <i class="fas fa-solid fa-user" style="padding-top: 2%"></i>
+            <a href="#" id="logout">Cerrar sesión</a>
+        `;
+        document.getElementById('logout').addEventListener('click', function() {
+            sessionStorage.setItem('loggedIn', 'false');
+            sessionStorage.setItem('staff', 'false');
+            location.reload();
+        });
+
+        if (sessionStorage.getItem('staff') === 'true') {
+            const crudLink = document.createElement('div');
+            crudLink.innerHTML = `<a href="{% url 'crud' %}">Crud</a>`;
+            navDiv.appendChild(crudLink);
+            }
+        }
+    });
+    </script>
+
+    <script src="{% static 'js/base.js' %}"></script>
 </body>
 </html>
