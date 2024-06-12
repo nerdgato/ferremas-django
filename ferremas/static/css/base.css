@@ -1,4 +1,8 @@
 
+body {
+    min-height: 100vh;
+}
+
 .contacto {
     display: flex;
     justify-content: flex-end;
@@ -14,12 +18,12 @@
     text-decoration-line: underline;
 }
 
-.footer {
+footer {
     color: white;
-    position: fixed;
-    bottom: 0;
     width: 100%;
     background: #006989;
+    position: sticky;
+    top: 100%;
 }
 
 .footer-content {

@@ -1,0 +1,12 @@
+.crud {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    padding: 5%;
+    flex-grow: 1;
+}
+
+form {
+    margin-bottom: 50px;
+}
+

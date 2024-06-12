@@ -1,0 +1,95 @@
+{% extends 'ferremas/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<link href="{% static 'css/crud.css' %}" rel="stylesheet">
+
+<div class="crud">
+    <div class="max-w-md w-full p-8 bg-white shadow-md rounded-lg">
+        <h1 class="text-3xl font-semibold mb-4 text-center">Consulta de Producto</h1>
+
+        <!-- Botones para desplegar los formularios -->
+        <div class="flex justify-between mb-4">
+            <button type="button" onclick="mostrarFormulario('consultaForm')" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">GET</button>
+            <button type="button" onclick="mostrarFormulario('postForm')" class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">POST</button>
+            <button type="button" onclick="mostrarFormulario('updateForm')" class="bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50">PUT</button>
+            <button type="button" onclick="mostrarFormulario('deleteForm')" class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">DELETE</button>
+        </div>
+
+        <!-- Formulario de consulta -->
+        <form id="consultaForm" class="mb-4 hidden">
+            <label for="productId" class="block mb-2">ID del Producto:</label>
+            <input type="text" id="productId" name="productId" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500">
+            <button type="button" onclick="consultarProducto()" class="mt-2 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Consultar</button>
+        </form>
+        <!-- Formulario de creación de producto -->
+        <form id="postForm" class="mb-4 hidden">
+            {% csrf_token %}
+            <label for="productName" class="block mb-2">Nombre del Producto:</label>
+            <input type="text" id="productName" name="productName" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500">
+
+            <label for="productDescription" class="block mt-4 mb-2">Descripción del Producto:</label>
+            <input type="text" id="productDescription" name="productDescription" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500">
+
+            <label for="productCategory" class="block mt-4 mb-2">Categoría del Producto:</label>
+            <input type="text" id="productCategory" name="productCategory" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500">
+
+            <label for="productPrice" class="block mt-4 mb-2">Precio del Producto:</label>
+            <input type="number" id="productPrice" name="productPrice" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500">
+
+            <label for="productStock" class="block mt-4 mb-2">Stock del Producto:</label>
+            <input type="number" id="productStock" name="productStock" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500">
+
+            <label for = "productImage" class="block mt-4 mb-2">Imagen del Producto:</label>
+            <input type="file" id="productImage" name="productImage" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500">
+
+            <button type="button" onclick="crearProducto()" class="mt-4 w-full bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">Crear Producto</button>
+
+
+        </form>
+        <!-- Formulario de actualización de producto -->
+        <form id="updateForm" class="mb-4 hidden">
+            {% csrf_token %}
+            <label for="productIdToUpdate" class="block mb-2">ID del Producto a Actualizar:</label>
+            <input type="text" id="productIdToUpdate" name="productIdToUpdate" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500">
+            <button type="button" onclick="obtenerProductoParaActualizar()" class="mt-2 w-full bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50">Obtener Producto</button>
+
+            <!-- Aquí se mostrará el formulario para actualizar el producto -->
+            <div id="updateProductForm" class="hidden mt-4">
+                <label for="updatedProductName" class="block mb-2">Nombre del Producto:</label>
+                <input type="text" id="updatedProductName" name="updatedProductName" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500">
+
+                <label for="updatedProductDescription" class="block mt-4 mb-2">Descripción del Producto:</label>
+                <input type="text" id="updatedProductDescription" name="updatedProductDescription" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500">
+
+                <label for="updatedProductCategory" class="block mt-4 mb-2">Categoría del Producto:</label>
+                <input type="text" id="updatedProductCategory" name="updatedProductCategory" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500">
+
+                <label for="updatedProductPrice" class="block mt-4 mb-2">Precio del Producto:</label>
+                <input type="number" id="updatedProductPrice" name="updatedProductPrice" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500">
+
+                <label for="updatedProductStock" class="block mt-4 mb-2">Stock del Producto:</label>
+                <input type="number" id="updatedProductStock" name="updatedProductStock" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500">
+
+                <label for = "updatedProductImage" class="block mt-4 mb-2">Imagen del Producto:</label>
+                <input type="file" id="updatedProductImage" name="updatedProductImage" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500">
+
+                <button type="button" onclick="actualizarProducto()" class="mt-4 w-full bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50">Actualizar Producto</button>
+            </div>
+        </form>
+        <!-- Formulario de eliminación de producto -->
+        <form id="deleteForm" class="mb-4 hidden">
+            {% csrf_token %}
+            <label for="productIdToDelete" class="block mb-2">ID del Producto a Eliminar:</label>
+            <input type="text" id="productIdToDelete" name="productIdToDelete" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500">
+            <button type="button" onclick="eliminarProducto()" class="mt-2 w-full bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">Eliminar Producto</button>
+        </form>
+    </div>
+    <div class="push"></div>
+</div>
+
+<script src="{% static 'js/crud.js' %}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+{% endblock %}
