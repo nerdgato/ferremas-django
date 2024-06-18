@@ -11,4 +11,5 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('api/usuarios/', views.usuario_create, name='usuario_create'),
     path('api/login/', views.login_view, name='login_view'),  # Cambiar nombre para evitar conflicto
+    path('carrito/', views.carrito, name='carrito'),
 ]

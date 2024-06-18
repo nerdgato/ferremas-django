@@ -17,11 +17,19 @@
             <p class="iva">IVA incluido</p>
         </div>
         <div class="px-6 pt-4 pb-2">
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Agregar al carrito
-            </button>
+            {% if producto.stock == 0 %}
+                <button disabled class="bg-gray-500 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed">
+                    Producto sin stock
+                </button>
+            {% else %}
+                <button data-id="{{ producto.id }}" class="add-to-cart bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Agregar al carrito
+                </button>
+            {% endif %}
         </div>
     </div>
     {% endfor %}
 </div>
+    <script src="{% static 'js/productos.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 {% endblock %}

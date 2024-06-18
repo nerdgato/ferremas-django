@@ -56,3 +56,7 @@ nav a:hover {
     display: flex;
     color: white;
 }
+
+.swal-button--confirm {
+    margin: 0 auto;
+}

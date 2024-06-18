@@ -39,7 +39,7 @@
                 <a href="{% url 'register' %}">Regístrate</a>
             </div>
             <div>
-                <a href="#"><i class="fas fa-shopping-cart"></i></a>
+                <a href="{% url 'carrito' %}" id="cart-link"><i class="fas fa-shopping-cart"></i></a>
             </div>
         </nav>
     </header>
@@ -78,7 +78,7 @@
         }
     });
     </script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="{% static 'js/base.js' %}"></script>
 </body>
 </html>

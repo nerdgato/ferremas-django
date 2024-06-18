@@ -19,3 +19,9 @@ button {
     margin-top: 0;
 
 }
+
+button:disabled {
+    cursor: not-allowed;
+    color: lightgrey; !important;
+    background: #A0A0A0;
+}

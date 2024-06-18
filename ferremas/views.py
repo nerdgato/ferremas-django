@@ -41,6 +41,10 @@ def productos(request):
     context = {'title': 'Productos', 'productos': productos}
     return render(request, 'ferremas/productos.html', context)
 
+def carrito(request):
+    context = {'title': 'Carrito'}
+    return render(request, 'ferremas/carrito.html', context)
+
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def producto_detail_update_delete(request, pk):
