@@ -7,8 +7,84 @@ from django.contrib.auth import authenticate, login as auth_login
 from .models import Producto, Usuario
 from .serializers import ProductoSerializer, UsuarioSerializer
 from django.core.exceptions import ObjectDoesNotExist
+from transbank.webpay.webpay_plus.transaction import Transaction, WebpayOptions
+from transbank.common.integration_type import IntegrationType
+from django.conf import settings
+
+import random
+
 import json
 
+@csrf_exempt
+def obtener_estado_transaccion(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        token = data.get('token')
+
+        if not token:
+            return JsonResponse({'error': 'Token no proporcionado'}, status=400)
+
+        # Configura las opciones de Webpay
+        webpay_options = WebpayOptions(
+            commerce_code=settings.COMMERCE_CODE,
+            api_key=settings.WEBPAY_API_KEY,
+            integration_type=IntegrationType.TEST
+        )
+
+        # Llama a la API de Transbank para obtener el estado de la transacción
+        transaction = Transaction(webpay_options)
+        response = transaction.get_status(token)
+
+        return JsonResponse(response, safe=False)
+
+
+@csrf_exempt
+def iniciar_pago(request):
+    if request.method == 'POST':
+        # Obtén el monto total de la compra del request
+        data = json.loads(request.body)
+        total = data.get('total')
+
+        buy_order = str(random.randint(100000, 999999))
+        session_id = 'session_id'
+        return_url = request.build_absolute_uri('/confirmar_pago/')
+        commerce_code = settings.COMMERCE_CODE
+        api_key = settings.WEBPAY_API_KEY
+
+        print(f"buy_order: {buy_order}")
+        print(f"session_id: {session_id}")
+        print(f"total: {total}")
+        print(f"return_url: {return_url}")
+        print(f"commerce_code: {commerce_code}")
+
+        # Configura las opciones de Webpay
+        webpay_options = WebpayOptions(
+            commerce_code=commerce_code,
+            api_key=api_key
+        )
+
+        # Llama a la API de Transbank para iniciar la transacción
+        transaction = Transaction(webpay_options)
+        response = transaction.create(
+            buy_order=buy_order,
+            session_id=session_id,
+            amount=total,
+            return_url=return_url
+        )
+
+        return JsonResponse(response, safe=False)
+
+
+
+@csrf_exempt
+def confirmar_pago(request):
+    token = request.POST.get('token_ws')
+    response = Transaction.commit(token)
+
+    if response['response_code'] == 0:
+        return render(request, 'pago_exitoso.html', {'response': response})
+    else:
+        return render(request, 'pago_fallido.html', {'response': response})
 
 @csrf_exempt
 def login_view(request):

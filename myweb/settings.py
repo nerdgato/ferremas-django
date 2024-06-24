@@ -11,11 +11,24 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from transbank.webpay.webpay_plus.transaction import Transaction, WebpayOptions
+from transbank.common.integration_type import IntegrationType
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+COMMERCE_CODE = '597055555532'
+WEBPAY_API_KEY = '579B532A7440BB0C9079DED94D31EA1615BACEB56610332264630D42D0A36B1C'
+
+webpay_options = WebpayOptions(
+    commerce_code=COMMERCE_CODE,
+    api_key=WEBPAY_API_KEY,
+    integration_type=IntegrationType.TEST
+)
+
+transaction = Transaction(webpay_options)
+# Transaction.configure_for_production('codigo_comercio', 'llave_comercio')  # Para producción
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/

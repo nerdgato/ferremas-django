@@ -58,13 +58,26 @@ if (document.getElementById('cart-table')) {
             var payButton = document.createElement('button');
             payButton.textContent = 'Pagar';
             payButton.className = 'bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded';
-            payButton.addEventListener('click', function() {
-                // Acción de pago aquí
-                alert('Pago realizado!');
-            });
+            payButton.id = 'pay-button';  // Añadir ID para el botón de pago
             payCell.appendChild(payButton);
         }
         document.getElementById('total-cell').textContent = "$" + total + " CLP";
+    }
+
+    // Función para manejar la transacción de pago
+    function handlePayment(total) {
+        fetch('/iniciar_pago/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ total: total }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            window.location.href = data.url;
+        })
+        .catch(error => console.error('Error:', error));
     }
 
     // Insertar la fila del total después de cargar todos los productos
@@ -153,5 +166,10 @@ if (document.getElementById('cart-table')) {
 
     Promise.all(promises).then(() => {
         updateTotalRow(); // Llamar a la función para inicializar la fila del total
+
+        // Añadir el evento de click al botón de pago
+        document.getElementById('pay-button').addEventListener('click', function() {
+            handlePayment(total); // Iniciar la transacción de pago
+        });
     });
 }

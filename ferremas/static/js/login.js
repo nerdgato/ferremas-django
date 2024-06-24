@@ -46,8 +46,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 });
             } else {
                 return response.json().then(data => {
-                    swal("¡Buen trabajo!", "Has iniciado sesión exitosamente", "success")
-                    .then(() => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Buen trabajo!',
+                        text: 'Has iniciado sesión exitosamente',
+                        timer: 1500,
+                        showConfirmButton: false
+                    }).then(() => {
                         sessionStorage.setItem('loggedIn', true);
                         sessionStorage.setItem('staff', data.staff);
                         window.location.href = '/';
@@ -56,7 +61,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
             }
         })
         .catch(error => {
-            swal("Error", error.message, "error");
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: error.message
+            });
         });
     });
 });
