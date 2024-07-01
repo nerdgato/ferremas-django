@@ -3,22 +3,44 @@
 {% load static %}
 
 {% block content %}
-    <link href="{% static 'css/carousel.css' %}" rel="stylesheet">
-    <link href="{% static 'css/home.css' %}" rel="stylesheet">
-    <div class="carousel mt-8">
-        <div class="carousel-inner">
-            <div class="carousel-item">
-                <img src="{% static 'img/banner1.jpg' %}" alt="Imagen 1">
-            </div>
-            <div class="carousel-item">
-                <img src="{% static 'img/banner2.jpg' %}" alt="Imagen 2">
-            </div>
-            <div class="carousel-item">
-                <img src="{% static 'img/banner3.jpg' %}" alt="Imagen 3">
-            </div>
-        </div>
-        <button class="carousel-control prev" onclick="prevSlide()">❮</button>
-        <button class="carousel-control next" onclick="nextSlide()">❯</button>
-    </div>
+
     <script src="{% static 'js/carousel.js' %}"></script>
+
+    <script src="{% static 'css/home.css' %}"></script>
+
+    <!-- Contenedor principal centrado verticalmente -->
+    <div class="flex flex-col justify-center min-h-screen botones">
+
+        <!-- Botón para mostrar productos -->
+        <div class="flex justify-center">
+            <button id="show-products-btn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" style="margin-top: 2%">Mostrar Productos</button>
+        </div>
+
+        <!-- Contenedor para mostrar la lista de productos -->
+        <div id="products-list" class="flex flex-col items-center mt-4"></div>
+
+        <!-- Botón para agregar producto -->
+        <div class="flex justify-center mt-4">
+            <button onclick="window.location.href='{% url 'crud' %}'" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" style="margin-bottom: 2%">Agregar Producto</button>
+        </div>
+
+    </div>
+
+    <script>
+        document.getElementById('show-products-btn').addEventListener('click', function() {
+            fetch('/api/productos/list/')  // Cambiado a /api/productos/list/
+                .then(response => response.json())
+                .then(data => {
+                    var productsList = document.getElementById('products-list');
+                    productsList.innerHTML = ''; // Limpiar la lista de productos
+                    data.forEach(product => {
+                        var productDiv = document.createElement('div');
+                        productDiv.textContent = 'Nombre: ' + product.nombre + ', Descripción: ' + product.descripcion + ', Precio: ' + product.precio;
+                        productDiv.className = 'bg-white p-4 w-full max-w-md mx-auto mt-4 rounded shadow-md';
+                        productsList.appendChild(productDiv);
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
 {% endblock %}

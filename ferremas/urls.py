@@ -7,6 +7,7 @@ urlpatterns = [
     path('productos/', views.productos, name='productos'),
     path('api/productos/<int:pk>/', views.producto_detail_update_delete, name='producto_detail_update_delete'),
     path('api/productos/', views.producto_create),
+    path('api/productos/list/', views.productos_list, name='productos_list'),  # Nueva ruta para obtener la lista de productos
     path('crud/', views.crud, name='crud'),
     path('login/', views.login_page, name='login'),
     path('register/', views.register, name='register'),

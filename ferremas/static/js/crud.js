@@ -46,7 +46,7 @@ function consultarProducto() {
         })
         .then(data => {
             // Mostrar los datos del producto en un SweetAlert
-            swal({
+            Swal.fire({
                 title: data.nombre,
                 text: `Descripción: ${data.descripcion}\nPrecio: ${data.precio}\nStock: ${data.stock}`,
                 icon: "success",
@@ -54,7 +54,7 @@ function consultarProducto() {
         })
         .catch(error => {
             // Mostrar un SweetAlert con el mensaje de error
-            swal({
+            Swal.fire({
                 title: "Error",
                 text: error.message,
                 icon: "error",
@@ -95,7 +95,7 @@ function crearProducto() {
         return response.json();
     })
     .then(data => {
-        swal({
+        Swal.fire({
             title: "Producto creado",
             text: `El producto ${data.nombre} ha sido creado exitosamente.`,
             icon: "success",
@@ -103,7 +103,7 @@ function crearProducto() {
     })
     .catch((error) => {
         // Mostrar un SweetAlert con el mensaje de error
-        swal({
+        Swal.fire({
             title: "Error",
             text: error.message || 'Ocurrió un error al crear el producto',
             icon: "error",
@@ -137,7 +137,7 @@ function obtenerProductoParaActualizar() {
         })
         .catch(error => {
             // Mostrar un SweetAlert con el mensaje de error
-            swal({
+            Swal.fire({
                 title: "Error",
                 text: error.message,
                 icon: "error",
@@ -179,7 +179,7 @@ function actualizarProducto() {
         return response.json();
     })
     .then(data => {
-        swal({
+        Swal.fire({
             title: "Producto actualizado",
             text: `El producto ${data.nombre} ha sido actualizado exitosamente.`,
             icon: "success",
@@ -187,7 +187,7 @@ function actualizarProducto() {
     })
     .catch((error) => {
         // Mostrar un SweetAlert con el mensaje de error
-        swal({
+        Swal.fire({
             title: "Error",
             text: error.message || 'Ocurrió un error al actualizar el producto',
             icon: "error",
@@ -213,7 +213,7 @@ function eliminarProducto() {
             // Si la respuesta no es exitosa, lanzar un error
             throw new Error('No se pudo eliminar el producto');
         }
-        swal({
+        Swal.fire({
             title: "Producto eliminado",
             text: `El producto con ID ${productId} ha sido eliminado exitosamente.`,
             icon: "success",
@@ -221,7 +221,7 @@ function eliminarProducto() {
     })
     .catch((error) => {
         // Mostrar un SweetAlert con el mensaje de error
-        swal({
+        Swal.fire({
             title: "Error",
             text: error.message || 'Ocurrió un error al eliminar el producto',
             icon: "error",
@@ -235,7 +235,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     const isStaff = sessionStorage.getItem('staff');
 
     if ( loggedIn === 'false' && isStaff === 'false') {
-        swal({
+        Swal.fire({
             title: "Acceso denegado",
             text: "No tienes permiso para acceder a esta página.",
             icon: "warning",
@@ -245,7 +245,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             window.location.href = '/';
         });
     } else if (loggedIn === 'true' && isStaff === 'false'){
-        swal({
+        Swal.fire({
             title: "Acceso denegado",
             text: "No tienes permiso para acceder a esta página.",
             icon: "warning",

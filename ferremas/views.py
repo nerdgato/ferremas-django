@@ -11,6 +11,7 @@ from transbank.webpay.webpay_plus.transaction import Transaction, WebpayOptions
 from transbank.common.integration_type import IntegrationType
 from django.conf import settings
 
+
 import random
 
 import json
@@ -176,3 +177,11 @@ def usuario_create(request):
             return JsonResponse(serializer.data, status=201)
         print(serializer.errors)  # Imprimir los errores
         return JsonResponse(serializer.errors, status=400)
+
+
+@api_view(['GET'])
+def productos_list(request):
+    if request.method == 'GET':
+        productos = Producto.objects.all()
+        serializer = ProductoSerializer(productos, many=True)
+        return Response(serializer.data)
