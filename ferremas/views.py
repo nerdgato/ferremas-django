@@ -85,7 +85,7 @@ def login_view(request):
 
 
 def home(request):
-    context = {'title': 'Perfect Sound'}
+    context = {'title': 'Ferremas'}
     return render(request, 'ferremas/home.html', context)
 
 
