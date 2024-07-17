@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
-from .views import iniciar_pago, confirmar_pago
+from .views import iniciar_pago_mercado_pago, confirmar_pago_mercado_pago
+
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -14,6 +15,6 @@ urlpatterns = [
     path('api/usuarios/', views.usuario_create, name='usuario_create'),
     path('api/login/', views.login_view, name='login_view'),  # Cambiar nombre para evitar conflicto
     path('carrito/', views.carrito, name='carrito'),
-    path('iniciar_pago/', iniciar_pago, name='iniciar_pago'),
-    path('confirmar_pago/', confirmar_pago, name='confirmar_pago'),
+    path('iniciar_pago_mercado_pago/', iniciar_pago_mercado_pago, name='iniciar_pago_mercado_pago'),
+    path('confirmar_pago_mercado_pago/', confirmar_pago_mercado_pago, name='confirmar_pago_mercado_pago'),
 ]

@@ -1,3 +1,4 @@
+<!-- ferremas/templates/ferremas/base.html -->
 {% load static %}
 
 <!DOCTYPE html>
@@ -8,9 +9,10 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-
 </head>
 <body>
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+
     <header>
         <!-- Aquí va tu menú de navegación -->
         <div class="contacto">
@@ -24,23 +26,18 @@
                 <a href="#">Tiendas</a>
             </div>
         </div>
-        <nav class="flex justify-between menu">
-            <div>
-                <a href="{% url 'home' %}">FERREMAS</a>
-            </div>
-
-            <div>
-                <a href="{% url 'productos' %}">Productos</a>
-            </div>
-            <div class="auth">
-                <i class="fas fa-solid fa-user" style="padding-top: 2%"></i>
-                <a href="{% url 'login' %}">Inicia sesión</a>
+        <nav class="flex justify-between items-center w-full px-4 menu">
+            <a href="{% url 'home' %}" class="flex-1 text-center">
+                <img src="{% static 'img/logo_banner.png' %}" alt="Logo" class="h-20 mx-auto object-contain">
+            </a>
+            <a href="{% url 'productos' %}" class="flex-1 text-lg text-center">Productos</a>
+            <div class="auth flex-1 flex items-center justify-center text-lg">
+                <i class="fas fa-solid fa-user"></i>
+                <a href="{% url 'login' %}" class="mx-2">Inicia sesión</a>
                 <p> o </p>
-                <a href="{% url 'register' %}">Regístrate</a>
+                <a href="{% url 'register' %}" class="mx-2">Regístrate</a>
             </div>
-            <div>
-                <a href="{% url 'carrito' %}" id="cart-link"><i class="fas fa-shopping-cart"></i></a>
-            </div>
+            <a href="{% url 'carrito' %}" id="cart-link" class="flex-1 text-lg text-center"><i class="fas fa-shopping-cart"></i></a>
         </nav>
     </header>
 
@@ -61,7 +58,7 @@
     const navDiv = document.querySelector('.menu');
     if (sessionStorage.getItem('loggedIn') === 'true') {
         authDiv.innerHTML = `
-            <i class="fas fa-solid fa-user" style="padding-top: 2%"></i>
+            <i class="fas fa-solid fa-user"></i>
             <a href="#" id="logout">Cerrar sesión</a>
         `;
         document.getElementById('logout').addEventListener('click', function() {

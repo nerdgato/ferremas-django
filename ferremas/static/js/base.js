@@ -52,21 +52,19 @@ if (document.getElementById('cart-table')) {
             totalCell.id = 'total-cell';
             totalCell.className = 'py-4 px-6 align-middle font-bold';
 
-
             var payCell = totalRow.insertCell();
             payCell.className = 'py-4 px-6 align-middle';
             var payButton = document.createElement('button');
             payButton.textContent = 'Pagar';
             payButton.className = 'bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded';
-            payButton.id = 'pay-button';  // Añadir ID para el botón de pago
+            payButton.id = 'pay-button';
             payCell.appendChild(payButton);
         }
         document.getElementById('total-cell').textContent = "$" + total + " CLP";
     }
 
-    // Función para manejar la transacción de pago
     function handlePayment(total) {
-        fetch('/iniciar_pago/', {
+        fetch('/iniciar_pago_mercado_pago/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -75,12 +73,11 @@ if (document.getElementById('cart-table')) {
         })
         .then(response => response.json())
         .then(data => {
-            window.location.href = data.url;
+            window.location.href = data.init_point;
         })
         .catch(error => console.error('Error:', error));
     }
 
-    // Insertar la fila del total después de cargar todos los productos
     var promises = [];
     for (var productId in cart) {
         promises.push(
@@ -105,10 +102,15 @@ if (document.getElementById('cart-table')) {
                     priceCell.textContent = "$" + producto.precio * cart[productId] + " CLP";
                     priceCell.className = 'py-4 px-6 align-middle';
 
-                    total += producto.precio * cart[productId]; // Acumular el total
+                    total += parseFloat(producto.precio) * parseInt(cart[productId], 10);
 
+                    // Ajustes en la creación de la celda de cantidad y botones
                     var quantityCell = row.insertCell();
-                    quantityCell.className = 'py-4 px-6 flex justify-around items-center align-middle custom-spacing';
+                    quantityCell.className = 'py-4 px-6 flex justify-around items-center align-middle';
+                    quantityCell.style.display = 'flex'; // Asegura que la celda use flexbox
+                    quantityCell.style.alignItems = 'center'; // Centra los elementos verticalmente
+                    quantityCell.style.justifyContent = 'space-around'; // Distribuye el espacio horizontalmente
+
 
                     var decreaseButton = document.createElement('button');
                     decreaseButton.className = 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded text-xs';
@@ -118,10 +120,9 @@ if (document.getElementById('cart-table')) {
                             cart[productId]--;
                             sessionStorage.setItem('cart', JSON.stringify(cart));
                             quantityDiv.textContent = cart[productId];
-                            var oldTotal = total;
-                            total -= producto.precio; // Restar solo el precio de un producto al total
+                            total -= parseFloat(producto.precio);
                             priceCell.textContent = "$" + producto.precio * cart[productId] + " CLP";
-                            updateTotalRow(); // Actualizar el total después de decrementar
+                            updateTotalRow();
                         }
                     });
 
@@ -136,8 +137,7 @@ if (document.getElementById('cart-table')) {
                         cart[productId]++;
                         sessionStorage.setItem('cart', JSON.stringify(cart));
                         quantityDiv.textContent = cart[productId];
-                        var oldTotal = total;
-                        total += producto.precio * cart[productId] - producto.precio;
+                        total += parseFloat(producto.precio);
                         priceCell.textContent = "$" + producto.precio * cart[productId] + " CLP";
                         updateTotalRow();
                     });
@@ -150,11 +150,11 @@ if (document.getElementById('cart-table')) {
                     deleteButton.textContent = 'Eliminar';
                     deleteButton.className = 'bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded';
                     deleteButton.addEventListener('click', function() {
-                        total -= producto.precio * cart[productId]; // Actualizar el total
+                        total -= producto.precio * cart[productId];
                         delete cart[productId];
                         sessionStorage.setItem('cart', JSON.stringify(cart));
                         cartTable.deleteRow(row.rowIndex);
-                        updateTotalRow(); // Actualizar la fila del total
+                        updateTotalRow();
                     });
 
                     var deleteCell = row.insertCell();
@@ -165,11 +165,9 @@ if (document.getElementById('cart-table')) {
     }
 
     Promise.all(promises).then(() => {
-        updateTotalRow(); // Llamar a la función para inicializar la fila del total
-
-        // Añadir el evento de click al botón de pago
+        updateTotalRow();
         document.getElementById('pay-button').addEventListener('click', function() {
-            handlePayment(total); // Iniciar la transacción de pago
+            handlePayment(total);
         });
     });
 }
