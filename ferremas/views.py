@@ -29,7 +29,7 @@ def iniciar_pago_mercado_pago(request):
         preference_data = {
             "items": [
                 {
-                    "title": "Compra en Perfect Sound",
+                    "title": "Compra en Ferremas",
                     "quantity": 1,
                     "unit_price": total
                 }
